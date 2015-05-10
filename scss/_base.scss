@@ -23,12 +23,25 @@
 
 }
 
+
+.trackers * {
+	position: fixed;
+	border: 1px solid red;
+	height: 50px;
+	width: 50px;
+}
+
 .action-item start
 .action-item help
-.box active-cat
-.box active-baby
+.box.active-cat {
+	left: 50%;
+}
+.box.active-baby {
+	left: 30%;
+}
 
-#boxes {
+#boxes,
+.trackers {
 	position: fixed;
 	top: 0;
 	left: 0;
