@@ -19,10 +19,18 @@ var	dom = {
 	catBaby = {
 		util: {
 			addListeners: function(){
-				dom.get('.action-item.start')
-					.addEventListener('click', function(){
-						dom.get('.action-item.start')
+				dom.on('click leapTap', dom.get('.action-item.start'), function(e){
+							console.log(e);
+							dom.get('.start-screen')[0].classList.add('is-hidden');
+							dom.get('.start-screen')[0].classList.add('game-started');
+						});
+
+
+					window.addEventListener('leapTap', function(e){
+						console.log(e.target);
 					});
+
+				
 			},
 			concatData: function (id, data){
 				return id + ': ' + data + '<br>';
@@ -62,7 +70,7 @@ var	dom = {
 			}
 		},
 		init: function(){
-
+			this.util.addListeners();
 		}
 	};
 
