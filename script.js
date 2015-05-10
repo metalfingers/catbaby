@@ -1,6 +1,13 @@
 var	dom = {
 		get: function(elem){
 			return document.querySelectorAll(elem);
+		},
+		on: function(events, elems, func){
+			events.split(' ').forEach(function(e){
+				for(var i = 0, len = elems.length; i < len; i++) {
+					elems[i].addEventListener(e, func);
+				}
+			});
 		}
 	},
 	output = dom.get('#output')[0],
