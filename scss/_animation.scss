@@ -1,0 +1,55 @@
+@-webkit-keyframes rotateOut {
+	from { 
+		transform: rotateZ(0deg);
+	}
+	to { 
+		transform: rotateZ(360deg);
+		width: 0%;
+		height: 0%;
+		opacity: 0;
+		z-index: $zi0;
+	}
+}
+@-o-keyframes rotateOut {
+	from { 
+		transform: rotateZ(0deg);
+	}
+	to { 
+		transform: rotateZ(360deg);
+		width: 0%;
+		height: 0%;
+		opacity: 0;
+		z-index: $zi0;
+	}
+}
+@-moz-keyframes rotateOut {
+	from { 
+		transform: rotateZ(0deg);
+	}
+	to { 
+		transform: rotateZ(360deg);
+		width: 0%;
+		height: 0%;
+		opacity: 0;
+		z-index: $zi0;
+	}
+}
+@keyframes rotateOut {
+	from { 
+		transform: rotateZ(0deg);
+	}
+	to { 
+		transform: rotateZ(360deg);
+		width: 0%;
+		height: 0%;
+		opacity: 0;
+		z-index: $zi0;
+	}
+}
+
+
+
+
+.game-started {
+	animation: rotateOut linear 2s forwards;
+}
