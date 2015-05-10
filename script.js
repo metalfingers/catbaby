@@ -74,11 +74,22 @@ var	dom = {
 		}
 	};
 
-(window.controller = new Leap.Controller)
-    .use('riggedHand')
-    .connect();
 
+	catBaby.init();
 
+	(window.controller = new Leap.Controller)
+	    .use('riggedHand', {
+	    	offset: new THREE.Vector3(0,-1000,0),
+	    	scale: 1000,
+	    	materialOptions: {
+		      wireframe: true
+		    },
+		    // camera: new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 )
+	    })
+	    .connect();
+
+	    // adjust camera position so that we can touch most of the screen
+	    controller.plugins.riggedHand.camera.position.z = 200;
 
 
 
@@ -120,12 +131,17 @@ controller.on('frame', function(frame){
 
 	}
 
-	// console.log('collision: ' + catBaby.util.isColliding(leftBox, rightBox));
-
 	if(catBaby.util.isColliding(leftBox, rightBox) === true) {
 
 	}
 
 	output.innerHTML = frameString;
 
+});
+
+
+controller.on('gesture', function(gesture){
+	if (gesture.type === 'screenTap') {
+		console.log(gesture);
+	}
 });
