@@ -7,16 +7,16 @@
 	<script src="//js.leapmotion.com/leap-0.6.4.min.js"></script>
 	<script src="//js.leapmotion.com/leap-plugins-0.1.10.min.js"></script>
 	<script src="//js.leapmotion.com/leap.rigged-hand-0.1.7.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 	<div class="start-screen">
 
-		<div class="hero flex-container">
+		<div class="hero l-flex-container">
 			<div class="actions">
 				<h1 class="big-title">CAT BABY FACTORY</h1>
 				<div class="action-item start">Start</div>
-				<div class="action-item help">Help</div>
+				<!-- <div class="action-item help">Help</div> -->
 			</div>
 		</div>
 
@@ -26,6 +26,17 @@
 		<div class="box active-cat"></div>
 		<div class="box active-baby"></div>	
 	</div>
+
+	<!-- SVGs -->
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+	  <defs>
+	    <filter id="goo">
+			<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+      		<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+      		<feBlend in="SourceGraphic" in2="goo" />
+	    </filter>
+	  </defs>
+	</svg>
 	<script type="text/javascript" src="script.js"></script>
 </body>
 </html>
