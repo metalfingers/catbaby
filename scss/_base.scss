@@ -1,5 +1,12 @@
+@font-face {
+	font-family: 'Press Start';
+	src: url('../fonts/prstartk.ttf');
+}
+
 .start-screen {
-	background-color: purple;
+	background: url('../img/lasercat.gif') top left no-repeat;
+	background-size: cover;
+	font-family: 'Press Start';
 	height: 100%;
 	left: 0;
 	position: absolute;
@@ -18,11 +25,22 @@
 }
 
 .actions {
+	background-color: rgba(255, 255, 255, .64);
 	clear: both;
 	margin: 0 auto;
-
+	padding: 100px;
+	text-align: center;
 }
 
+.action-item.start {
+	animation: start-button infinite 500ms;
+	border: 2px solid #000;
+	cursor: pointer;
+	margin: 30px auto 0;
+	padding: 10px;
+	width: 100px;
+}
+.action-item help
 
 .trackers * {
 	position: fixed;
@@ -31,8 +49,6 @@
 	width: 50px;
 }
 
-.action-item start
-.action-item help
 .box.active-cat {
 	left: 50%;
 }

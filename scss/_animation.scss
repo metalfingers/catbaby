@@ -1,9 +1,9 @@
 @-webkit-keyframes rotateOut {
 	from { 
-		transform: rotateZ(0deg);
+		// -webkit-transform: rotateZ(0deg);
 	}
 	to { 
-		transform: rotateZ(360deg);
+		// -webkit-transform: rotateZ(360deg);
 		width: 0%;
 		height: 0%;
 		opacity: 0;
@@ -48,8 +48,28 @@
 }
 
 
+@-webkit-keyframes start-button {
+	0% { color: rgba(255, 255, 255, .64); }
+	99% { color: rgba(255, 255, 255, .64); }
+	100% { color: black; }
+}
+@-o-keyframes start-button {
+	0% { color: rgba(255, 255, 255, .64); }
+	99% { color: rgba(255, 255, 255, .64); }
+	100% { color: black; }
+}
+@-moz-keyframes start-button {
+	0% { color: rgba(255, 255, 255, .64); }
+	100% { color: black; }
+}
+@keyframes start-button {
+	0% { color: rgba(255, 255, 255, .64); }
+	100% { color: black; }
+}
+
 
 
 .game-started {
+	-webkit-animation: rotateOut linear 2s forwards;
 	animation: rotateOut linear 2s forwards;
 }

@@ -70,6 +70,9 @@ var	dom = {
 				var catBabyFrag = document.createDocumentFragment(),
 					catBabyPart1 = elem1.cloneNode(),
 					catBabyPart2 = elem2.cloneNode();
+		setStartBackground: function(){
+			dom.get('.start-screen')[0].style.backgroundImage = 'url(./img/start-screen-'+ (Math.floor(Math.random() * (4 - 1 + 1)) + 1) +'.gif)';
+		},
 
 				catBabyFrag.appendChild(catBabyPart1);
 				catBabyFrag.appendChild(catBabyPart2);
@@ -79,6 +82,7 @@ var	dom = {
 		},
 		init: function(){
 			this.util.addListeners();
+			this.setStartBackground();
 		}
 	};
 
