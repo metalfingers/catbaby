@@ -14,20 +14,19 @@ var	dom = {
 	frameString = "",
 	hand,
 	handPositionOnScreen,
-	leftBox = dom.get('.active-cat')[0],
-	rightBox = dom.get('.active-baby')[0],
+	pointerLeft = dom.get('.left-hand')[0],
+	pointerRight = dom.get('.right-hand')[0],
 	catBaby = {
 		util: {
 			addListeners: function(){
 				dom.on('click leapTap', dom.get('.action-item.start'), function(e){
-							console.log(e);
 							dom.get('.start-screen')[0].classList.add('is-hidden');
 							dom.get('.start-screen')[0].classList.add('game-started');
 						});
 
 
 					window.addEventListener('leapTap', function(e){
-						console.log(e.target);
+						// console.log(e.target);
 					});
 
 				
@@ -48,7 +47,7 @@ var	dom = {
 									width: elem2.getBoundingClientRect().width,
 									height: elem2.getBoundingClientRect().height
 								};
-
+								
 				if (elem1Bounds.x < elem2Bounds.x + elem2Bounds.width &&
 				   elem1Bounds.x + elem1Bounds.width > elem2Bounds.x &&
 				   elem1Bounds.y < elem2Bounds.y + elem2Bounds.height &&
@@ -57,6 +56,15 @@ var	dom = {
 				} else {
 					return false;
 				}
+			},
+			touchPoints: function(){
+
+			},
+			selectableElements: function(){
+				return dom.get('.box');
+			},
+			tapThrough: function(){
+
 			},
 			makeCatBaby: function(elem1, elem2) {
 				var catBabyFrag = document.createDocumentFragment(),
@@ -79,12 +87,9 @@ var	dom = {
 
 	(window.controller = new Leap.Controller)
 	    .use('riggedHand', {
-	    	offset: new THREE.Vector3(0,-1000,0),
-	    	scale: 1000,
 	    	materialOptions: {
 		      wireframe: true
 		    },
-		    // camera: new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 )
 	    })
 	    .connect();
 
@@ -96,44 +101,32 @@ var	dom = {
 
 
 controller.on('frame', function(frame){
-	frameString = catBaby.util.concatData('frame_id', frame.id);
 
 	// hands
 	for(var i = 0, len = frame.hands.length; i < len; i++) {
 		hand = frame.hands[i];
 		handPositionOnScreen = hand.data('riggedHand.mesh').screenPosition(hand.fingers[1].tipPosition); //{x: [int], y: [int], z: [int]}
-
-		frameString += catBaby.util.concatData('hand type', hand.type);
-		frameString += catBaby.util.concatData('grab strength', hand.grabStrength);
-
 		
 		switch (hand.type){
 			case 'right': 
-				rightBox.style.left = handPositionOnScreen.x + 'px'; 
-				rightBox.style.bottom = handPositionOnScreen.y + 'px';
-				rightBox.style.zIndex = Math.floor(handPositionOnScreen.z);
-				hand.grabStrength > 0.7 ? rightBox.classList.add('gripped') : rightBox.classList.remove('gripped');
-
-				frameString += catBaby.util.concatData('right hand left', handPositionOnScreen.x + 'px');
-				frameString += catBaby.util.concatData('right hand bottom', handPositionOnScreen.y + 'px');
-
+				pointerRight.style.left = handPositionOnScreen.x + 'px'; 
+				pointerRight.style.bottom = handPositionOnScreen.y + 'px';
+				pointerRight.style.zIndex = Math.floor(handPositionOnScreen.z);
+				// hand.grabStrength > 0.7 ? pointerRight.classList.add('gripped') : pointerRight.classList.remove('gripped');
 				break;
 			case 'left':
-				leftBox.style.left = handPositionOnScreen.x + 'px'; 
-				leftBox.style.bottom = handPositionOnScreen.y + 'px';
-				leftBox.style.zIndex = Math.floor(handPositionOnScreen.z);
-				hand.grabStrength > 0.7 ? leftBox.classList.add('gripped') : leftBox.classList.remove('gripped');
-
-				frameString += catBaby.util.concatData('left hand left', handPositionOnScreen.x + 'px');
-				frameString += catBaby.util.concatData('left hand bottom', handPositionOnScreen.y + 'px');
+				pointerLeft.style.left = handPositionOnScreen.x + 'px'; 
+				pointerLeft.style.bottom = handPositionOnScreen.y + 'px';
+				pointerLeft.style.zIndex = Math.floor(handPositionOnScreen.z);
+				// hand.grabStrength > 0.7 ? pointerLeft.classList.add('gripped') : pointerLeft.classList.remove('gripped');
 				break;
 		}
 
 	}
 
-	if(catBaby.util.isColliding(leftBox, rightBox) === true) {
+	// if(catBaby.util.isColliding(pointerLeft, pointerRight) === true) {
 
-	}
+	// }
 
 	output.innerHTML = frameString;
 
@@ -142,6 +135,14 @@ controller.on('frame', function(frame){
 
 controller.on('gesture', function(gesture){
 	if (gesture.type === 'screenTap') {
-		console.log(gesture);
+		var cachedSelectableElems = catBaby.util.selectableElements();
+		for(var i=0, len = catBaby.util.selectableElements().length; i < len; i++) {
+			if (catBaby.util.isColliding(pointerLeft, cachedSelectableElems[i])) {
+				cachedSelectableElems[i].classList.add('is-selected');
+			}
+			if (catBaby.util.isColliding(pointerRight, cachedSelectableElems[i])) {
+				cachedSelectableElems[i].classList.add('is-selected');
+			}
+		}
 	}
 });
