@@ -17,71 +17,69 @@ var	dom = {
 	pointerLeft = dom.get('.left-hand')[0],
 	pointerRight = dom.get('.right-hand')[0],
 	catBaby = {
-		util: {
-			addListeners: function(){
-				dom.on('click leapTap', dom.get('.action-item.start'), function(e){
-							dom.get('.start-screen')[0].classList.add('is-hidden');
-							dom.get('.start-screen')[0].classList.add('game-started');
-						});
-
-
-					window.addEventListener('leapTap', function(e){
-						// console.log(e.target);
+		addListeners: function(){
+			dom.on('click leapTap', dom.get('.action-item.start'), function(e){
+						dom.get('.start-screen')[0].classList.add('is-hidden');
+						dom.get('.start-screen')[0].classList.add('game-started');
 					});
 
-				
-			},
-			concatData: function (id, data){
-				return id + ': ' + data + '<br>';
-			},
-		 	isColliding: function(elem1, elem2){
-				var elem1Bounds = {
-									x: elem1.getBoundingClientRect().left, 
-									y: elem1.getBoundingClientRect().top, 
-									width: elem1.getBoundingClientRect().width,
-									height: elem1.getBoundingClientRect().height
-								},
-					elem2Bounds = {
-									x: elem2.getBoundingClientRect().left, 
-									y: elem2.getBoundingClientRect().top, 
-									width: elem2.getBoundingClientRect().width,
-									height: elem2.getBoundingClientRect().height
-								};
-								
-				if (elem1Bounds.x < elem2Bounds.x + elem2Bounds.width &&
-				   elem1Bounds.x + elem1Bounds.width > elem2Bounds.x &&
-				   elem1Bounds.y < elem2Bounds.y + elem2Bounds.height &&
-				   elem1Bounds.height + elem1Bounds.y > elem2Bounds.y) {
-				    return true;
-				} else {
-					return false;
-				}
-			},
-			touchPoints: function(){
 
-			},
-			selectableElements: function(){
-				return dom.get('.box');
-			},
-			tapThrough: function(){
+				window.addEventListener('leapTap', function(e){
+					// console.log(e.target);
+				});
 
-			},
-			makeCatBaby: function(elem1, elem2) {
-				var catBabyFrag = document.createDocumentFragment(),
-					catBabyPart1 = elem1.cloneNode(),
-					catBabyPart2 = elem2.cloneNode();
+			
+		},
+		concatData: function (id, data){
+			return id + ': ' + data + '<br>';
+		},
+	 	isColliding: function(elem1, elem2){
+			var elem1Bounds = {
+								x: elem1.getBoundingClientRect().left, 
+								y: elem1.getBoundingClientRect().top, 
+								width: elem1.getBoundingClientRect().width,
+								height: elem1.getBoundingClientRect().height
+							},
+				elem2Bounds = {
+								x: elem2.getBoundingClientRect().left, 
+								y: elem2.getBoundingClientRect().top, 
+								width: elem2.getBoundingClientRect().width,
+								height: elem2.getBoundingClientRect().height
+							};
+
+			if (elem1Bounds.x < elem2Bounds.x + elem2Bounds.width &&
+			   elem1Bounds.x + elem1Bounds.width > elem2Bounds.x &&
+			   elem1Bounds.y < elem2Bounds.y + elem2Bounds.height &&
+			   elem1Bounds.height + elem1Bounds.y > elem2Bounds.y) {
+			    return true;
+			} else {
+				return false;
+			}
+		},
+		touchPoints: function(){
+
+		},
+		selectableElements: function(){
+			return dom.get('.box');
+		},
+		tapThrough: function(){
+
+		},
 		setStartBackground: function(){
 			dom.get('.start-screen')[0].style.backgroundImage = 'url(./img/start-screen-'+ (Math.floor(Math.random() * (4 - 1 + 1)) + 1) +'.gif)';
 		},
+		makeCatBaby: function(elem1, elem2) {
+			var catBabyFrag = document.createDocumentFragment(),
+				catBabyPart1 = elem1.cloneNode(),
+				catBabyPart2 = elem2.cloneNode();
 
-				catBabyFrag.appendChild(catBabyPart1);
-				catBabyFrag.appendChild(catBabyPart2);
+			catBabyFrag.appendChild(catBabyPart1);
+			catBabyFrag.appendChild(catBabyPart2);
 
-				return catBabyElem;
-			}
+			return catBabyElem;
 		},
 		init: function(){
-			this.util.addListeners();
+			this.addListeners();
 			this.setStartBackground();
 		}
 	};
@@ -128,7 +126,7 @@ controller.on('frame', function(frame){
 
 	}
 
-	// if(catBaby.util.isColliding(pointerLeft, pointerRight) === true) {
+	// if(catBaby.isColliding(pointerLeft, pointerRight) === true) {
 
 	// }
 
@@ -139,12 +137,12 @@ controller.on('frame', function(frame){
 
 controller.on('gesture', function(gesture){
 	if (gesture.type === 'screenTap') {
-		var cachedSelectableElems = catBaby.util.selectableElements();
-		for(var i=0, len = catBaby.util.selectableElements().length; i < len; i++) {
-			if (catBaby.util.isColliding(pointerLeft, cachedSelectableElems[i])) {
+		var cachedSelectableElems = catBaby.selectableElements();
+		for(var i=0, len = catBaby.selectableElements().length; i < len; i++) {
+			if (catBaby.isColliding(pointerLeft, cachedSelectableElems[i])) {
 				cachedSelectableElems[i].classList.add('is-selected');
 			}
-			if (catBaby.util.isColliding(pointerRight, cachedSelectableElems[i])) {
+			if (catBaby.isColliding(pointerRight, cachedSelectableElems[i])) {
 				cachedSelectableElems[i].classList.add('is-selected');
 			}
 		}
