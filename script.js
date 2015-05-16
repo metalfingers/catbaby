@@ -23,12 +23,33 @@ var	dom = {
 						dom.get('.start-screen')[0].classList.add('game-started');
 					});
 
+			window.addEventListener('leapTap', function(e){
+				// console.log(e.target);
+			});
 
-				window.addEventListener('leapTap', function(e){
-					// console.log(e.target);
-				});
-
+			window.addEventListener('resize', function(){
+				catBaby.setCanvasSize();
+			});
 			
+		},
+		getCanvas: function() {
+			return dom.get('#cat-babies')[0];
+		},
+		setCanvasSize: function() {
+			var canvas = this.getCanvas();
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		},
+		catPositions: {},
+		babyPositions: {},
+		addCat: function() {
+			var catID = +(new Date()); // date to number in one easy step!
+			var context = this.getCanvas().getContext('2d');
+
+			context.drawImage(dom.get('.cat-tear')[0], 0, 0);
+
+
+			// look at CRC.getImageData()
 		},
 		concatData: function (id, data){
 			return id + ': ' + data + '<br>';
@@ -78,9 +99,16 @@ var	dom = {
 
 			return catBabyElem;
 		},
+		onAnimationFrame: function() {
+			window.requestAnimationFrame( catBaby.onAnimationFrame ) {
+
+			}
+		},
 		init: function(){
 			this.addListeners();
 			this.setStartBackground();
+			this.setCanvasSize();
+
 		}
 	};
 
@@ -95,8 +123,8 @@ var	dom = {
 	    })
 	    .connect();
 
-	    // adjust camera position so that we can touch most of the screen
-	    controller.plugins.riggedHand.camera.position.z = 200;
+    // adjust camera position so that we can touch most of the screen
+    controller.plugins.riggedHand.camera.position.z = 200;
 
 
 
@@ -129,8 +157,6 @@ controller.on('frame', function(frame){
 	// if(catBaby.isColliding(pointerLeft, pointerRight) === true) {
 
 	// }
-
-	output.innerHTML = frameString;
 
 });
 
