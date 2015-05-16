@@ -32,11 +32,18 @@ var	dom = {
 			});
 			
 		},
-		getCanvas: function() {
-			return dom.get('#cat-babies')[0];
+		randomRange: function(max, min){
+			return Math.floor( Math.random() * (max - min + min) ) + min;
+		},
+		cbCanvas: undefined,
+		getCBCanvas: function() {
+			if (this.cbCanvas !== undefined) {
+				this.cbCanvas = dom.get('#cat-babies')[0];
+			}
+			return this.cbCanvas;
 		},
 		setCanvasSize: function() {
-			var canvas = this.getCanvas();
+			var canvas = this.getCBCanvas();
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
 		},
@@ -87,7 +94,7 @@ var	dom = {
 
 		},
 		setStartBackground: function(){
-			dom.get('.start-screen')[0].style.backgroundImage = 'url(./img/start-screen-'+ (Math.floor(Math.random() * (4 - 1 + 1)) + 1) +'.gif)';
+			dom.get('.start-screen')[0].style.backgroundImage = 'url(./img/start-screen-'+ this.randomRange(4,1) +'.gif)';
 		},
 		makeCatBaby: function(elem1, elem2) {
 			var catBabyFrag = document.createDocumentFragment(),
