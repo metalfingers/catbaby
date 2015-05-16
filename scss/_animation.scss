@@ -1,7 +1,8 @@
 @-webkit-keyframes rotateOut {
 	from { 
-		// -webkit-transform: rotateZ(0deg);
+		// -webkit-transform: rotateZ(0);
 	}
+
 	to { 
 		// -webkit-transform: rotateZ(360deg);
 		width: 0%;
@@ -12,59 +13,62 @@
 }
 @-o-keyframes rotateOut {
 	from { 
-		transform: rotateZ(0deg);
+		transform: rotateZ(0);
 	}
+
 	to { 
-		transform: rotateZ(360deg);
-		width: 0%;
 		height: 0%;
 		opacity: 0;
+		transform: rotateZ(360deg);
+		width: 0%;
 		z-index: $zi0;
 	}
 }
 @-moz-keyframes rotateOut {
 	from { 
-		transform: rotateZ(0deg);
+		transform: rotateZ(0);
 	}
+
 	to { 
-		transform: rotateZ(360deg);
-		width: 0%;
 		height: 0%;
 		opacity: 0;
+		transform: rotateZ(360deg);
+		width: 0%;
 		z-index: $zi0;
 	}
 }
 @keyframes rotateOut {
 	from { 
-		transform: rotateZ(0deg);
+		transform: rotateZ(0);
 	}
+
 	to { 
-		transform: rotateZ(360deg);
-		width: 0%;
 		height: 0%;
 		opacity: 0;
+		transform: rotateZ(360deg);
+		width: 0%;
 		z-index: $zi0;
 	}
 }
 
 
 @-webkit-keyframes start-button {
-	0% { color: rgba(255, 255, 255, .64); }
-	99% { color: rgba(255, 255, 255, .64); }
-	100% { color: black; }
+	0% { color: $invisible; }
+	99% { color: $invisible; }
+	100% { color: $black; }
 }
 @-o-keyframes start-button {
-	0% { color: rgba(255, 255, 255, .64); }
-	99% { color: rgba(255, 255, 255, .64); }
-	100% { color: black; }
+	0% { color: $invisible; }
+	99% { color: $invisible; }
+	100% { color: $black; }
 }
 @-moz-keyframes start-button {
-	0% { color: rgba(255, 255, 255, .64); }
-	100% { color: black; }
+	0% { color: $invisible; }
+	100% { color: $black; }
 }
 @keyframes start-button {
-	0% { color: rgba(255, 255, 255, .64); }
-	100% { color: black; }
+	0% { color: $invisible; }
+	100% { color: $black; }
 }
 
 
