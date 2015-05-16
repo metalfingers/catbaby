@@ -47,16 +47,31 @@ var	dom = {
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
 		},
-		catPositions: {},
-		babyPositions: {},
+		catPositions: [],
+		babyPositions: [],
 		addCat: function() {
-			var catID = +(new Date()); // date to number in one easy step!
-			var context = this.getCanvas().getContext('2d');
+			var cat = {},
+				catTypes = ['grinning', 'joy', 'smiling', 'heart', 'wry', 'kissing', 'crying', 'weary'];
+				context = this.getCBCanvas().getContext('2d');
 
-			context.drawImage(dom.get('.cat-tear')[0], 0, 0);
+			cat.id = +(new Date()); // date to number in one easy step!
+			cat.x =  0;
+			cat.y = 0;
+			cat.type = 'cat-' + catTypes[ this.randomRange( catTypes.length, 0) ];
+			this.catPositions.push(cat);
+
+			context.drawImage(dom.get('.source-images .' + cat.type)[0], 0, 0);
 
 
 			// look at CRC.getImageData()
+		},
+		moveCats: function() {
+			for (var cat in this.catPositions) {
+				this.moveThings(cat, cat.x + 10, cat.y);
+			}	
+		},
+		moveThings: function(elem, toX, toY) {
+			
 		},
 		concatData: function (id, data){
 			return id + ': ' + data + '<br>';
@@ -107,15 +122,15 @@ var	dom = {
 			return catBabyElem;
 		},
 		onAnimationFrame: function() {
-			window.requestAnimationFrame( catBaby.onAnimationFrame ) {
+			window.requestAnimationFrame( catBaby.onAnimationFrame);
+			// console.log('in anim');
 
-			}
 		},
 		init: function(){
 			this.addListeners();
 			this.setStartBackground();
 			this.setCanvasSize();
-
+			this.onAnimationFrame();
 		}
 	};
 
