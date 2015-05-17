@@ -35,10 +35,14 @@ var	dom = {
 		randomRange: function(max, min){
 			return Math.floor( Math.random() * (max - min + min) ) + min;
 		},
+		catTypes: ['grinning', 'joy', 'smiling', 'heart', 'wry', 'kissing', 'crying', 'weary'],
+		babieTypes: [],
 		cbCanvas: undefined,
+		cbContext: undefined,
 		getCBCanvas: function() {
-			if (this.cbCanvas !== undefined) {
+			if (this.cbCanvas === undefined) {
 				this.cbCanvas = dom.get('#cat-babies')[0];
+				this.cbContext = this.cbCanvas.getContext('2d'); // probably shouldn't be setting this here
 			}
 			return this.cbCanvas;
 		},
@@ -46,32 +50,50 @@ var	dom = {
 			var canvas = this.getCBCanvas();
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
+			canvas.globalCompositeOperation = 'destination-over';
 		},
 		catPositions: [],
 		babyPositions: [],
+		catImageData: {},
+		getCatImageData: function(){
+			var canvas = this.getCBCanvas();
+			for (var i in this.catTypes) {
+				// draw the image
+				this.cbContext.drawImage( dom.get( '.source-images .cat-' + this.catTypes[i] )[0], 0, 0, 100, 100);
+				catBaby.cbContext.fillText(catBaby.catTypes[i], 0, 20);
+
+				//cache the image
+				catBaby.catImageData['cat-' + catBaby.catTypes[i] ] = catBaby.cbContext.getImageData(0, 0, 100, 100);
+
+				//clear the canvas
+				catBaby.cbContext.clearRect(0, 0, canvas.width, canvas.height );
+	
+			}
+		},
 		addCat: function() {
-			var cat = {},
-				catTypes = ['grinning', 'joy', 'smiling', 'heart', 'wry', 'kissing', 'crying', 'weary'];
-				context = this.getCBCanvas().getContext('2d');
+			var cat = {};
 
 			cat.id = +(new Date()); // date to number in one easy step!
 			cat.x =  0;
 			cat.y = 0;
-			cat.type = 'cat-' + catTypes[ this.randomRange( catTypes.length, 0) ];
+			cat.type = 'cat-' + this.catTypes[ this.randomRange( this.catTypes.length, 0) ];
+			cat.imageData = this.catImageData[cat.type];
 			this.catPositions.push(cat);
-
-			context.drawImage(dom.get('.source-images .' + cat.type)[0], 0, 0);
-
-
 			// look at CRC.getImageData()
 		},
 		moveCats: function() {
 			for (var cat in this.catPositions) {
-				this.moveThings(cat, cat.x + 10, cat.y);
+				var thisCat = this.catPositions[cat];
+				// update cat position
+				thisCat.x = thisCat.x + 1;
+				thisCat.y = thisCat.y;
+
+				//draw cat
+				this.moveThings(thisCat.imageData, thisCat.x, thisCat.y);
 			}	
 		},
 		moveThings: function(elem, toX, toY) {
-			
+			this.cbContext.putImageData(elem, toX, toY);			
 		},
 		concatData: function (id, data){
 			return id + ': ' + data + '<br>';
@@ -124,10 +146,13 @@ var	dom = {
 		onAnimationFrame: function() {
 			window.requestAnimationFrame( catBaby.onAnimationFrame);
 			// console.log('in anim');
-
+			// catBaby.addCat();
+			catBaby.moveCats();
 		},
 		init: function(){
+			this.getCBCanvas();
 			this.addListeners();
+			this.getCatImageData();
 			this.setStartBackground();
 			this.setCanvasSize();
 			this.onAnimationFrame();
